@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src='/jquery-2.1.3.min.js'></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <script src='/jquery-ui-1.11.4.min.js'></script>
+    <script src='/code.js'></script>
+
+    <link rel='stylesheet' type='text/css' href='https://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css'>
+    <link rel='stylesheet' type='text/css' href='/style.css'>
+
+</head>
+
+<body>
+    <div class="demo">
+        <div>
+            <p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding:4px;">
+                <span class="ui-icon ui-icon-volume-on" style="float:left; margin:-2px 5px 0 0;"></span> parrot-vox <span id="out-size"></span>
+                <h2 id="state">NORMAL</h2>
+                <!--<button class="pause">&#9646;&#9646;</button>-->
+                <button class="play-local">&#9656;</button>
+                <button class="play">&#9654;</button>
+                <button class="record">&#9679;</button>
+                <button class="stop">&#9632;</button>
+                <button class="loop">&#8734;</button>
+                <span id="vu-meter"></span>
+
+            </p>
+        </div>
+
+        <div style="height:300px">
+            <p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding:4px;" />
+            <span class="ui-icon ui-icon-volume-on" style="float:left; margin:-2px 5px 0 0;"></span> config
+            <h2>NORMAL</h2>
+
+            <div class=" vertical-slider-container ">
+                <div class="horizontal " style="position: relative; width:130px; text-align:center" title="[default: 5 frames] Period of non-silence before triggering recording (units are capture frames so about 1/48000 seconds)">
+                    duration-start
+                    <span class="tooltip "></span> 
+                    <!-- Tooltip -->
+                    <div class="slider " id="duration-start" data-units="f"></div>
+                    <!-- the Slider -->
+                    <!-- <span class="horizontal-icon icon-volume "></span>  -->
+                    <!-- Volume -->
+                </div>
+
+                <div class="horizontal " style="position: relative; width:130px; top: 30px;text-align:center" title="[default: 2 seconds] Period of silence before stopping recording (units are seconds)">
+                    duration-stop
+                    <span class="tooltip "></span> 
+                    <!-- Tooltip -->
+                    <div class="slider " id="duration-stop" data-units="s"></div>
+                    <!-- the Slider -->
+                    <!-- <span class="horizontal-icon icon-volume "></span>  -->
+                    <!-- Volume -->
+                </div>
+
+                <div class="horizontal " style="position: relative; width:130px; top: 60px; height:30px;text-align:center " title="[default: 20 seconds] Maximum recording length in seconds ">
+                    duration
+                    <span class="tooltip "></span> 
+                    <!-- Tooltip -->
+                    <div class="slider " id="duration" data-units="s"></div>
+                    <!-- the Slider -->
+                    <!-- <span class="horizontal-icon icon-volume "></span>  -->
+                    <!-- Volume -->
+                </div>
+
+            </div>
+
+
+
+            <div class=" vertical-slider-container ">
+                <div class="horizontal " style="position: relative; width:130px; text-align:center" title="[default: 2%] When input volume raises above this value for a period of time above duration-start frames, recording will start.">
+                    start-threshold
+                    <span class="tooltip "></span> 
+                    <!-- Tooltip -->
+                    <div class="slider " id="start-threshold" data-units="%"></div>
+                    <!-- the Slider -->
+                    <!-- <span class="horizontal-icon icon-volume "></span>  -->
+                    <!-- Volume -->
+                </div>
+
+                <div class="horizontal " style="position: relative; width:130px; top: 30px;text-align:center" title="[default: 2%] When input volume falls below this value for a period of time above duration-stop seconds, recording will stop.">
+                    stop-threshold
+                    <span class="tooltip "></span> 
+                    <!-- Tooltip -->
+                    <div class="slider " id="stop-threshold" data-units="%"></div>
+                    <!-- the Slider -->
+                    <!-- <span class="horizontal-icon icon-volume "></span>  -->
+                    <!-- Volume -->
+                </div>
+            </div>
+
+
+
+            <div class="vertical-slider-container" style="margin-left: 10px" title="[default: 100%] Master Mic Volume %">
+                <div class="vertical-icon icon-microphone "></div>
+                <!-- microphone -->
+                <div class="tooltip"></div>
+                <!-- Tooltip -->
+                <div class="slider-vertical" id="input-gain" data-units="%"></div>
+                <!-- the Slider -->
+            </div>
+
+            <div class="vertical-slider-container" title="[default: 100%] Master Audio Volume %">
+                <div class="vertical-icon icon-volume "></div>
+                <!-- microphone -->
+                <div class="tooltip "></div>
+                <!-- Tooltip -->
+                <div class="slider-vertical" id="output-volume" data-units="%"></div>
+                <!-- the Slider -->
+            </div>
+
+            <div class="vertical-slider-container" title="[default: 1] Playback volume boost (software amplification). This will additionally amplify output signal by set factor when playing a recording. Beware of clipping!">
+                <div class="vertical-icon icon-volume "></div>
+                <!-- microphone -->
+                <div class="tooltip "></div>
+                <!-- Tooltip -->
+                <div class="slider-vertical" id="output-boost" data-max="5" data-step="0.1"></div>
+                <!-- the Slider -->
+            </div>
+
+            <div class="vertical-slider-container" title="[default: 1] Mic boost (software amplification). This will additionally amplify input signal by set factor and thresholds will trigger sooner. But beware of clipping!">
+                <div class="vertical-icon icon-microphone "></div>
+                <!-- microphone -->
+                <div class="tooltip "></div>
+                <!-- Tooltip -->
+                <div class="slider-vertical" id="input-boost" data-max="5" data-step="0.1"></div>
+                <!-- the Slider -->
+            </div>
+
+            <div class="vertical-slider-container" title="Load/save or restore default configuration.">
+                <div class="horizontal" style="position: relative; width:150px; top: 60px; text-align: center;">
+                    <button class="load">load</button>
+                    <button class="save">save</button>
+                    <button class="reset">defaults</button>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div style="height:300px ">
+            <ul id='messages'></ul>
+        </div>
+</body>
+
+</html>

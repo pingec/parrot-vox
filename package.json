@@ -1,0 +1,33 @@
+{
+  "name": "parrot-vox",
+  "version": "0.0.1",
+  "description": "Records sounds and plays them back automatically.",
+  "main": "main.js",
+  "dependencies": {
+    "restify": "^3.0.1",
+    "socket.io": "^1.3.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pingec/parrot-vox"
+  },
+  "keywords": [
+    "sox",
+    "record",
+    "sound",
+    "audio",
+    "parrot",
+    "delay",
+    "playback"
+  ],
+  "author": "Matej Drolc matej.drolc@pingec.si",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pingec/parrot-vox/issues"
+  },
+  "homepage": "https://github.com/pingec/parrot-vox"
+}

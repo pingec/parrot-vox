@@ -1,0 +1,11 @@
+{
+    "start-threshold": 2,
+    "stop-threshold": 2,
+    "duration-start": 5,
+    "duration-stop": 2,
+    "duration": 20,
+    "input-gain": 100,
+    "output-volume": 100,
+    "input-boost": 1,
+    "output-boost": 1
+}
