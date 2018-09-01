@@ -21,7 +21,7 @@ Linux raspberrypi 3.18.7+ #755 PREEMPT Thu Feb 12 17:14:31 GMT 2015 armv6l GNU/L
 
 Using an external usb sound card (1908:2070 GEMBIRD) but any C-Media CM108 and similar should work fine.
 
-##Configuration
+## Configuration
 - Some things can be changed via the web interface (everything in config.json), other are hardcoded in code. You might have to modify the paths in code.
 - To make the external usb audio card the default one change /etc/modprobe.d/alsa-base.conf set:
     ```bash
@@ -34,7 +34,7 @@ Using an external usb sound card (1908:2070 GEMBIRD) but any C-Media CM108 and s
 If you're using a Raspberry Pi and notice the output isnt totally clean, some USB Audio adapters don't like USB-1.2 and produce crackling in the output. You can work around the problem by adding dwc_otg.speed=1 to /boot/cmdline.txt and setting the USB ports to USB-1.1 mode.
 
 
-##config.json example
+## config.json example
 
 ```js
 {
@@ -50,7 +50,7 @@ If you're using a Raspberry Pi and notice the output isnt totally clean, some US
 }
 ``` 
 
-##Appendix: sox syntax explanation
+## Appendix: sox syntax explanation
 
 ```bash
 silence [ -l ] above_periods [ duration threshold[d|%] ] [ below_periods duration threshold[d|%] ]
